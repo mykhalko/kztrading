@@ -1,0 +1,12 @@
+/**/*.pyc
+/**/__pycache__
+/activate
+/deactivate
+/bin
+/lib
+/include
+/share
+/src/root
+/src/kztrading/privateconf.py
+/**/.idea
+
