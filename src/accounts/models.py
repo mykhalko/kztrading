@@ -32,10 +32,10 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
 
-    email = models.EmailField(max_length=255, unique=True, empty=False, blank=False)
-    name = models.CharField(max_length=255)
-    surname = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=32)
+    email = models.EmailField(max_length=255, unique=True, blank=False, null=False)
+    name = models.CharField(max_length=255, null=True)
+    surname = models.CharField(max_length=255, null=True)
+    phone_number = models.CharField(max_length=32, null=True)
     registration_date = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=False, verbose_name='active')
     is_staff = models.BooleanField(default=False, verbose_name='staff')
