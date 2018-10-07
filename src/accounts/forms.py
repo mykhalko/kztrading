@@ -60,7 +60,7 @@ class RegistrationForm(forms.ModelForm):
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
-        if len(phone_number == 0):
+        if len(phone_number) == 0:
             raise forms.ValidationError('Phone number can\'t be empty!')
         if not phone_number.isdigit():
             raise forms.ValidationError('Incorrect phone number format! Only digits acceptable!')
@@ -90,3 +90,4 @@ class RegistrationForm(forms.ModelForm):
         self.instance.is_staff = False
         self.instance.is_admin = False
         super().save(commit)
+
