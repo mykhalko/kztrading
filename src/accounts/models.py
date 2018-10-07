@@ -56,12 +56,28 @@ class User(AbstractBaseUser, PermissionsMixin):
         return str(self.email)
 
 
+class ConfirmationManager(models.Manager):
+
+    def create_confirmation_link(self, user):
+        if not user:
+            raise ValueError('Can\'t create confirmation link with no linked user!')
+        if user.is_active:
+            raise ValueError('User email {} already confirmed!'.format(user.email))
+        confirmation = self.model(user=user)
+        confirmation.save(using=self._db)
+        return confirmation
+
+def get_expiration_time():
+    return timezone.now() + datetime.timedelta(days=1)
+
 class Confirmation(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid1, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    expiration = models.DateTimeField(default=lambda: timezone.now() + datetime.timedelta(days=1))
-    visited = models.BooleanField(default=True)
+    expiration = models.DateTimeField(default=get_expiration_time())
+    visited = models.BooleanField(default=False)
+
+    objects = ConfirmationManager()
 
     def __str__(self):
         return str(self.user) + ' ' +  str(self.id)
