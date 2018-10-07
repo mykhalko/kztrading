@@ -86,7 +86,7 @@ class ConfirmView(DetailView):
         email = self.object.user.email
         return {'email': email}
 
-    def get(self, requset, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.visited = True
         self.object.user.is_active = True
