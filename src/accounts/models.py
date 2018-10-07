@@ -67,8 +67,10 @@ class ConfirmationManager(models.Manager):
         confirmation.save(using=self._db)
         return confirmation
 
+
 def get_expiration_time():
     return timezone.now() + datetime.timedelta(days=1)
+
 
 class Confirmation(models.Model):
 
