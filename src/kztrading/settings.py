@@ -130,3 +130,10 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'kztrading-static')
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'kztrading-media')
+
+EMAIL_BACKEND = privateconf.EMAIL_BACKEND
+EMAIL_USE_TLS = privateconf.EMAIL_USE_TLS
+EMAIL_HOST = privateconf.EMAIL_HOST
+EMAIL_PORT = privateconf.EMAIL_PORT
+EMAIL_HOST_USER = privateconf.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = privateconf.EMAIL_HOST_PASSWORD
