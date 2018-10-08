@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+
+{% for object in object_list %}
+    <div>
+        {{ object.title }}
+    </div>
+    <div>
+        {{ object.description }}
+    </div>
+    <div>
+        ${{ object.price }}
+    </div>
+    <div>
+        {{ object.seller }}
+    </div>
+    <div>
+        {{ object.category.title }}
+    </div>
+    <div>
+        <a href="{% url 'products:item' id=object.id %}">link</a>
+    </div>
+    <hr>
+{% endfor %}
+
+</body>
+</html>
