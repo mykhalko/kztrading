@@ -1,17 +1,26 @@
 from django.core.mail import EmailMessage
 from django.core.exceptions import ValidationError
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 from django.views.generic import FormView, DetailView
 from django.shortcuts import render, redirect
 from django.http import Http404
+
 
 from . import forms
 from .models import Confirmation
 
 
-class LoginView(FormView):
+class LoginView(UserPassesTestMixin ,FormView):
     template_name = 'accounts/default.html'
     form_class = forms.LoginForm
+
+    def test_func(self):
+        return not self.request.user.is_authenticated
+
+    def handle_no_permission(self):
+        return redirect('/')
 
     def get_form(self, form_view = None):
         return self.form_class(request=self.request, **self.get_form_kwargs())
@@ -27,9 +36,15 @@ class LoginView(FormView):
         return super().form_invalid(form)
 
 
-class RegisterView(FormView):
+class RegisterView(UserPassesTestMixin, FormView):
     template_name = 'accounts/default.html'
     form_class = forms.RegistrationForm
+
+    def test_func(self):
+        return not self.request.user.is_authenticated
+
+    def handle_no_permission(self):
+        return redirect('/')
 
     def get_success_url(self):
         return 'accounts/register_success'
@@ -39,7 +54,8 @@ class RegisterView(FormView):
         user = form.instance
         confirmation = Confirmation.objects.create_confirmation_link(user)
         self.send_confirmation(confirmation)
-        return redirect('/accounts/registration_success/')
+        # return redirect('/accounts/registration_success/')
+        return render(self.request, 'accounts/registration_success.html', {})
 
     def form_invalid(self, form):
         return super().form_invalid(form)
@@ -62,6 +78,12 @@ class RegisterView(FormView):
 
 def registration_success_view(request):
     return render(request, 'accounts/registration_success.html', {})
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('/')
 
 
 class ConfirmView(DetailView):
