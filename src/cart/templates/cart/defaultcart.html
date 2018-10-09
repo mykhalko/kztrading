@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cart</title>
+</head>
+<body>
+{% if object_list %}
+    {% for object in object_list %}
+        <div>
+            object.title
+        </div>
+        <div>
+            object.price
+        </div>
+        <div>
+            object.description
+        </div>
+    {% endfor %}
+{% else %}
+{% endif %}
+</body>
+</html>
