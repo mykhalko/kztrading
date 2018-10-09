@@ -32,6 +32,7 @@ def add_to_cart(request):
 
 
 def get_cart_items(request):
+
     items = request.session.get('cart_items')
     if not items:
         return JsonResponse({
