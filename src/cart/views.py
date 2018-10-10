@@ -14,6 +14,5 @@ class CartItemsView(ListView):
         items = self.request.session.get('cart_items')
         if not items:
             return None
-        query = [Q(id=item_id) for item_id in items]
-        queryset = Product.objects.filter(query)
+        queryset = Product.objects.filter_id(items)
         return queryset

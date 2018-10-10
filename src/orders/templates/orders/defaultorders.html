@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+</head>
+<body>
+{% if object_list %}
+    {% for object in objects_list %}
+        <div>
+            order id {{ object.id }}
+        </div>
+        <div>
+            order for {{ object.product.title }}
+        </div>
+        <div>
+            seller: {{ object.product.seller.email }}
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    <div>
+        You have not made any orders yet :(
+    </div>
+{% endif %}
+</body>
+</html>
