@@ -1,6 +1,8 @@
+from functools import reduce
 import uuid
 
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth import get_user_model
 
 
@@ -11,6 +13,14 @@ class ProductManager(models.Manager):
 
     def category(self, title):
         queryset = self.get_queryset().filter(category__title=title)
+        return queryset
+
+    def filter_id(self, id_list):
+        if not id_list:
+            return None
+        query_list = [Q(id=item_id) for item_id in id_list]
+        query= reduce(lambda total, item: total | item, query_list)
+        queryset = self.model.objects.filter(query)
         return queryset
 
 
