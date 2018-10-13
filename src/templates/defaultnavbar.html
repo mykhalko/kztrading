@@ -1,0 +1,81 @@
+{% url 'accounts:login' as login_url %}
+{% url 'accounts:register' as register_url %}
+{% url 'accounts:logout' as logout_url %}
+{% url 'products:items' as products_url %}
+{% url 'home:home' as home_url %}
+
+
+<nav class="navbar navbar-expand-lg {# navbar-light bg-light #} custom-full-navbar">
+    <a class="navbar-brand" href="#"><i>KZtrading</i></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle{% if request.get_full_path == home_url %} active {% endif %}"
+                   href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    {{ request.user.surname }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Incoming orders</a>
+                    <a class="dropdown-item" href="#">Sales list</a>
+                    <a class="dropdown-item" href="#">Purchases list</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ logout_url }}">Log out</a>
+                </div>
+            </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link{% if request.get_full_path == register_url %} active {% endif %}"
+                       href="{{ register_url }}">Sign up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if request.get_full_path == login_url %} active {% endif %}"
+                       href="{{ login_url }}">
+                        Sign in
+                    </a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link{% if request.get_full_path == goods_url %} active {% endif %}"
+                   href="{{ products_url }}">Products
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"
+                   href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Categories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Example</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="">Example</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{% if request.session.purchases_amount %} active {% endif %}" href="#">
+                    <i class="fas fa-shopping-cart"></i>
+                    <sup>
+                        {% if request.session.purchases_amount %}
+                            {{ request.session.purchases_amount }}
+                        {% else %}
+                            empty
+                        {% endif %}
+                    </sup>
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0 custom-navbar-button" type="submit">Search</button>
+        </form>
+    </div>
+</nav>

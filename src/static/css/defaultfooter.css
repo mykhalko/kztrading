@@ -1,0 +1,22 @@
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.custom-full-footer{
+    color: #386324;
+    background-color: #e2f9cd;
+}
+
+.custom-full-footer a{
+    color: #51852c;
+}
+
+.custom-full-footer a:hover{
+    color: #274e32;
+}
+
+.custom-full-footer a:visited{
+    color: #386324;
+}

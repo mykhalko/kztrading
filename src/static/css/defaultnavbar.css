@@ -1,0 +1,29 @@
+.custom-full-navbar {
+    background-color: #e2f9cd;
+}
+/* change the brand and text color */
+.custom-full-navbar .navbar-brand,
+.custom-full-navbar .navbar-text {
+    color: #51852c;
+}
+/* change the link color */
+.custom-full-navbar .navbar-nav .nav-link {
+    color: #51852c;
+}
+/* change the color of active or hovered links */
+.custom-full-navbar .nav-item.active .nav-link,
+.custom-full-navbar .nav-item:hover .nav-link {
+    color: #274e32;
+}
+
+.custom-full-navbar .dropdown-item{
+    color: #274e32;
+}
+
+.custom-full-navbar .dropdown-item:hover{
+    background-color: #e2f9cd;
+}
+
+.custom-full-navbar .dropdown-menu{
+    border-color: #274e32;
+}
