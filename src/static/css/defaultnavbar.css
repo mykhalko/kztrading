@@ -27,3 +27,17 @@
 .custom-full-navbar .dropdown-menu{
     border-color: #274e32;
 }
+
+.custom-full-navbar .navbar-toggler{
+    border-color: #274e32;
+    color: #274e32;
+}
+
+.custom-full-navbar .navbar-toggler-icon{
+    color: #274e32;
+}
+
+.active {
+    color: #274e32 !important;
+}
+

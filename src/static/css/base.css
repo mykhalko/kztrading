@@ -1,5 +1,15 @@
 html, body{
     height: 100%;
     width: 100%;
-    position: relative;
+    position: static;
+}
+
+button.btn-primary{
+    background-color: #71c36d;
+    border-color: #6bc36f;
+}
+
+button.btn-primary:hover, button.btn-primary:focus, button.btn-primary:active{
+    background-color: #549c50 !important;
+    border-color: #3a753a;
 }
