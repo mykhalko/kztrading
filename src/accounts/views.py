@@ -13,7 +13,7 @@ from .models import Confirmation
 
 
 class LoginView(UserPassesTestMixin ,FormView):
-    template_name = 'accounts/default.html'
+    template_name = 'accounts/login.html'
     form_class = forms.LoginForm
 
     def test_func(self):
@@ -33,11 +33,17 @@ class LoginView(UserPassesTestMixin ,FormView):
         return redirect('/')
 
     def form_invalid(self, form):
-        return super().form_invalid(form)
+        context = self.get_context_data()
+        context.update({
+            'form': form,
+            'login_failed_message': 'Incorrect email or password'
+            })
+        return self.render_to_response(context)
+        # return super().form_invalid(form)
 
 
 class RegisterView(UserPassesTestMixin, FormView):
-    template_name = 'accounts/default.html'
+    template_name = 'accounts/registration.html'
     form_class = forms.RegistrationForm
 
     def test_func(self):
@@ -58,7 +64,12 @@ class RegisterView(UserPassesTestMixin, FormView):
         return render(self.request, 'accounts/registration_success.html', {})
 
     def form_invalid(self, form):
-        return super().form_invalid(form)
+        context = self.get_context_data()
+        context.update({
+            'form': form,
+            'registration_failed_message': form.errors
+        })
+        return self.render_to_response(context)
 
     def send_confirmation(self, confirmation):
         request = self.request
@@ -74,10 +85,6 @@ class RegisterView(UserPassesTestMixin, FormView):
         message = message_raw.format(link)
         mail = EmailMessage(subject, message, to=[confirmation.user.email])
         mail.send()
-
-
-def registration_success_view(request):
-    return render(request, 'accounts/registration_success.html', {})
 
 
 @login_required
@@ -110,6 +117,8 @@ class ConfirmView(DetailView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
+        if self.object.visited is True:
+            raise Http404()
         self.object.visited = True
         self.object.user.is_active = True
         self.object.user.save()

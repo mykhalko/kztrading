@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from . import ajax
 from . import views
 
 
@@ -12,4 +13,7 @@ urlpatterns = [
     url('confirm/(?P<uuid_key>[0-9a-zA-Z-]+)/$', views.ConfirmView.as_view()),
     # url('registration_success/$', views.registration_success_view),
     url('logout/$', views.logout_view, name='logout'),
+
+    #ajax
+    url('ajax_validate_email', ajax.check_email_existence),
 ]

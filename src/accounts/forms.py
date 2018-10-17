@@ -7,8 +7,22 @@ User = get_user_model()
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput)
-    password = forms.CharField(widget=forms.PasswordInput)
+    email_attributes = {
+        'class': 'form-control',
+        'type': 'email',
+        'placeholder': 'Enter email',
+        'id': 'login-email-input'
+    }
+
+    password_attributes = {
+        'class': 'form-control',
+        'type': 'password',
+        'placeholder': 'Enter password',
+        'id': 'login-password-input'
+    }
+
+    email = forms.EmailField(widget=forms.EmailInput(attrs=email_attributes))
+    password = forms.CharField(widget=forms.PasswordInput(attrs=password_attributes))
 
     model = User
 
@@ -31,14 +45,44 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ['name', 'surname', 'phone_number', 'email', 'password']
         widgets = {
-            'name': forms.TextInput(),
-            'surname': forms.TextInput(),
-            'phone_number': forms.TextInput(),
-            'email': forms.EmailInput(),
-            'password': forms.PasswordInput()
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Enter your name',
+                'id': 'register-name-input'
+            }),
+            'surname': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Enter your surname',
+                'id': 'register-surname-input'
+            }),
+            'phone_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Enter your number',
+                'id': 'register-phone-number-input'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'type': 'email',
+                'placeholder': 'Enter your email address',
+                'id': 'register-email-input'
+            }),
+            'password': forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'type': 'password',
+                'placeholder': 'Enter password',
+                'id': 'register-password-input'
+            })
         }
 
-    password_confirmation = forms.CharField(widget=forms.PasswordInput)
+    password_confirmation = forms.CharField(widget=forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'type': 'password',
+                'placeholder': 'Enter password',
+                'id': 'register-password-confirmation-input'
+            }))
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -55,7 +99,7 @@ class RegistrationForm(forms.ModelForm):
     def clean_surname(self):
         surname = self.cleaned_data.get('surname')
         if len(surname) == 0:
-            raise forms.ValidationError('Surame can\'t be empty!')
+            raise forms.ValidationError('Surname can\'t be empty!')
         return surname
 
     def clean_phone_number(self):
@@ -90,4 +134,3 @@ class RegistrationForm(forms.ModelForm):
         self.instance.is_staff = False
         self.instance.is_admin = False
         super().save(commit)
-

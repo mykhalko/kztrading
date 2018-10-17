@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign up {% endblock %}
+
+
+{% block body %}
+    {% if registration_failed_message %}
+        <div class="alert alert-danger registration-error-block">
+            {{ registration_failed_message }}
+        </div>
+    {% endif %}
+    <div class="container-fluid ">
+        <form class="mt-5 ml-auto mr-auto col-8 col-sm-5 col-md-4 col-lg-3" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="register-email-input">Email address</label>
+                    {{ form.email }}
+                <div class="invalid-feedback" id="email-invalid-feedback"></div>
+                <div class="valid-feedback">Looks good!</div>
+                <small class="form-text text-muted">We'll never share your email with anyone else.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="register-name-input">Name</label>
+                    {{ form.name }}
+                <div class="invalid-feedback" id="name-invalid-feedback">can't be empty<empty></empty></div>
+                <div class="valid-feedback">Looks good!</div>
+                <small class="form-text text-muted">Enter your real name.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="register-surname-input">Surname</label>
+                    {{ form.surname }}
+                <div class="invalid-feedback" id="name-invalid-feedback">can't be empty</div>
+                <div class="valid-feedback">Looks good!</div>
+                <small class="form-text text-muted">Enter your real surname.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="register-phone-number-input">Phone number</label>
+                    {{ form.phone_number }}
+                <div class="invalid-feedback" id="name-invalid-feedback">incorrect syntax</div>
+                <div class="valid-feedback">Looks good!</div>
+                <small class="form-text text-muted">Enter your real surname.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="register-password-input">
+                    Password
+                </label>
+                {{ form.password }}
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback" id="password-invalid-feedback">incorrect syntax</div>
+                <small class="text-muted">
+                    Must be 8-32 characters long.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="register-password-confirmation-input">
+                    Password confirmation
+                </label>
+                {{ form.password_confirmation }}
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="register-submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}
+{% block additional_scripts %}
+    <script src="{% static 'accounts/register.js' %}"></script>
+{% endblock %}

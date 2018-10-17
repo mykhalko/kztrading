@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration success</title>
-</head>
-<body>
-    Thank you for registration on our resource!
-    Please, confirm your email address to finish completely!
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-10 col-md-8 mx-auto">
+                <p class="thanks-block">
+                    Thank you for registration on our resource!
+                    Please, confirm your email address to finish completely!
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block footer %}{% endblock %}
