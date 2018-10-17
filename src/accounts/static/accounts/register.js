@@ -28,7 +28,7 @@ function main(){
         checkFieldsEqual.bind(null, passwordInput, passwordConfirmationInput));
     submitButton.click(function(event){
         if(!checkSubmitAllowed()){
-            event.preventDefault()
+            event.preventDefault();
         }
     });
 }
@@ -125,16 +125,16 @@ function checkFieldsEqual(primaryField, confirmationField){
 
 function checkSubmitAllowed(){
     var inputFields = [
-        $('#register-email-inpurt'),
-        $('#register-name-inpurt'),
-        $('#register-surname-inpurt'),
-        $('#register-phone-number-inpurt'),
-        $('#register-password-inpurt'),
+        $('#register-email-input'),
+        $('#register-name-input'),
+        $('#register-surname-input'),
+        $('#register-phone-number-input'),
+        $('#register-password-input'),
         $('#register-password-confirmation-input')
     ];
 
     function valid(value){
-        return value.hasClass('is-valid')
+        return value.hasClass('is-valid');
     }
-    return inputFields.every(valid)
+    return inputFields.every(valid);
 }
