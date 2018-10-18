@@ -51,11 +51,19 @@ class Image(models.Model):
         return str(self.image.url)
 
 
+def build_category_image_path(instance, name):
+    ext = name.split('.')[-1]
+    new_name = instance.slug
+    return 'categories/images/' + new_name + '.' + ext
+
+
 class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
 
     title = models.CharField(max_length=255)
+    slug = models.CharField(max_length=128, null=True)
+    image = models.ImageField(null=True, blank=True, upload_to=build_category_image_path)
     description = models.CharField(max_length=255)
 
     def __str__(self):
