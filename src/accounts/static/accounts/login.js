@@ -46,7 +46,7 @@ function validateEmail(){
 
     var email = $(this).val();
     $.ajax({
-        url: '/accounts/ajax_validateEmail',
+        url: '/accounts/ajax_validate_email',
         method: 'GET',
         data: {'email': email},
         dataType: 'json',
