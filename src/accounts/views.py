@@ -30,7 +30,8 @@ class LoginView(UserPassesTestMixin ,FormView):
 
     def form_valid(self, form):
         login(request=self.request, user=form.user)
-        return redirect('/')
+        redirect_url = self.request.GET.get('next', '/')
+        return redirect(redirect_url)   
 
     def form_invalid(self, form):
         context = self.get_context_data()
