@@ -1,2 +1,74 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block additional_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cart/cart.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">
+                title
+            </th>
+            <th scope="col">
+                id
+            </th>
+            <th scope="col">
+                seller
+            </th>
+            <th scope="col">
+                price
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        </thead>
+        {% for object in object_list %}
+            <tr class="item-row" id="item-row-{{ object.id }}">
+                <td>
+                    {{ object.title|slice:'20' }}
+                </td>
+                <td>
+                    {{ object.id }}
+                </td>
+                <td>
+                    {{ object.seller.email }}
+                </td>
+                <td>
+                    ${{ object.price }}
+                </td>
+                <td>
+                    <button type="button" onclick="order({{ object.id }}, '{% url 'orders:order' %}')" class="btn btn-primary float-right order-btn">order</button>
+                    <button type="button" onclick="remove({{ object.id }}, '{% url 'cart:remove' %}')" class="btn btn-outline-danger float-right remove-btn">remove</button>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr class="non-empty-cart-row"{% if not object_list %} style="display: none"{% endif %}>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="total-cost">${{ total_cost }}</td>
+            <td>
+                <button type="button" onclick="orderAll('{% url 'orders:order' %}')"
+                        class="btn btn-primary float-right order-btn">order all</button>
+                <button type="button" onclick="removeAll('{% url 'cart:remove' %}')"
+                        class="btn btn-outline-danger float-right remove-btn">remove all
+                </button>
+            </td>
+        </tr>
+        <tr class="empty-cart-row"{% if object_list %} style="display: none"{% endif %}>
+            <td align=center colspan="5" class="no-orders-row">
+                No orders
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
+
+{% block additional_scripts %}
+    <script src="{% static 'cart/requests.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,27 @@
+table{
+        min-height: 300px;
+}
+
+.order-btn{
+    border-radius: 0 5px 5px 0;
+}
+
+.remove-btn{
+    border-radius: 5px 0 0 5px;
+}
+
+tr:hover{
+    background-color: #e2f9cd;
+}
+
+tr:last-child:hover{
+    background-color: white;
+}
+
+.no-orders-row{
+    font-weight: bold;
+}
+
+.total-cost{
+        font-weight: bold;
+}

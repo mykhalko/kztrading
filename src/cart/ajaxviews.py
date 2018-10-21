@@ -1,8 +1,10 @@
 from functools import reduce
 
+from django.core.exceptions import SuspiciousOperation
 from django.http import JsonResponse
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import View
 
 from products.models import Product
 
@@ -40,3 +42,26 @@ def add_to_cart(request):
         'success': True,
         'id': id
     })
+
+
+class RemoveView(View):
+
+    http_method_names = ['post']
+
+    def __init__(self, *args, **kwargs):
+        self.request = None
+        super().__init__(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.request = request
+        item = request.POST.get('item', None)
+        if item and item in request.session.get('cart_items'):
+            request.session['cart_items'].remove(item)
+            purchases_amount = request.session['purchases_amount']
+            request.session['purchases_amount'] = purchases_amount - 1
+        else:
+            request.session['cart_items'] = None
+            request.session['purchases_amount'] = 0
+        return JsonResponse({
+            'success': True
+        })
