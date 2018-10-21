@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'products/productdetail.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-10 col-md-8 mx-auto mt-3">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        {% for image in object.image_set.all %}
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for image in object.image_set.all %}
+                        <div class="carousel-item{% if not forloop.counter0 %} active{% endif %}">
+                            <div class="d-block w-100 image-container">
+                                <img src="{{ image.image.url }}">
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-10 col-md-4 mx-auto my-3">
+                <h3 align="center" class="page-item product-header">{{ object.title.upper }}</h3>
+                <div class="mt-4 product-activity-block">
+                    <span class="price">${{ object.price }}</span>
+                    <button onclick="addToCart({{ object.id }}, '{% url 'cart:add_to_cart' %}')" class="float-right btn btn-primary">Add to cart <i class="fas fa-shopping-cart"></i></button>
+                </div>
+                <div class="mt-4 product-description">
+                    <p>
+                        {{ object.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additional_scripts %}
+    <script src="{% static 'products/addtocart.js' %}"></script>
+{% endblock %}

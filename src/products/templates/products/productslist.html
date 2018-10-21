@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static '/products/productlist.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            {% for product in object_list %}
+                <div class="col-12 col-md-6 col-lg-4 mt-3 mb-3">
+                    <div class="card  mx-auto" style="width: 320px; height: 400px;">
+                        <img class="card-img-top mx-auto fix-img-size"
+                             src="{{ product.image_set.first.image.url }}" alt="{{ product.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.title }}</h5>
+                            <p class="card-text">{{ product.description|slice:'35' }}...</p>
+                            <span class="text btn font-weight-bold">${{ product.price }}</span>
+                            <button onclick="addToCart({{ product.id }}, '{% url 'cart:add_to_cart' %}')"
+                                    class="btn btn-primary float-right">
+                                Add to cart <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                        <button align="center"
+                                onclick="location.href='{% url 'products:category_item' category=product.category.slug id=product.id %}'"
+                                class="btn card-footer">
+                            show more
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% if is_paginated %}
+        <div class="row my-3">
+            <div class=" mx-auto" aria-label="pagination">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item active">
+                    <span class="page-link">
+                    {{ page_obj.number }}
+                    <span class="sr-only">(current)</span>
+                    </span>
+                    </li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block additional_scripts %}
+    <script src="{% static 'products/addtocart.js' %}"></script>
+{% endblock %}

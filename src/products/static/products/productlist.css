@@ -1,0 +1,20 @@
+.fix-img-size {
+    height: 180px;
+    width: auto;
+    max-width: 100%;
+}
+
+.pagination > li.page-item > span.page-link {
+    background-color: #71c36d;
+    border-color: #71c36d;
+}
+
+.pagination > li.page-item > a{
+    color: #3a753a;
+}
+
+.pagination > li.page-item:hover,
+.pagination >li.page-item > a:hover{
+    background-color: #e2f9cd;
+    border-color: #e2f9cd;
+}

@@ -1,0 +1,22 @@
+.image-container{
+    height: 425px;
+    display: block;
+}
+
+img{
+    height: 100%;
+    display: block;
+    margin: auto;
+}
+
+.product-header{
+    color: #1c7430;
+}
+
+.d-block{
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.price{
+    font-size: 24px;
+}

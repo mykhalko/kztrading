@@ -8,7 +8,7 @@
 <div>
     {{ object.title }}
 </div>
-<<div>
+<div>
     {{ object.description }}
 </div>
 <div>
@@ -17,5 +17,8 @@
 <div>
     {{ object.seller }}
 </div>
+{% for image in object.image_set.all %}
+    <img src="{{ image.image.url }}">
+{% endfor %}
 </body>
 </html>

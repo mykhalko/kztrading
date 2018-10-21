@@ -4,7 +4,7 @@ import uuid
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth import get_user_model
-
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -36,11 +36,14 @@ class Product(models.Model):
     def __str__(self):
         return str(self.title) + ' ' + str(self.seller.email)
 
+    def get_absolute_url(self):
+        return reverse('products:category_item', kwargs={'category': self.category.slug, 'id': self.id})
+
 
 def build_image_upload_path(instance, filename):
-    old_name = ext = filename.rsplit('.', 1)
+    ext = filename.split('.')[-1]
     new_name = str(uuid.uuid1())
-    return '/products/images/' + new_name + '.' + ext
+    return 'products/images/' + new_name + '.' + ext
 
 
 class Image(models.Model):
@@ -48,7 +51,7 @@ class Image(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.image.url)
+        return str(self.image.url).split('/')[-1]
 
 
 def build_category_image_path(instance, name):
@@ -62,7 +65,7 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
     title = models.CharField(max_length=255)
-    slug = models.CharField(max_length=128, null=True)
+    slug = models.CharField(max_length=128, blank=False, null=False, unique=True)
     image = models.ImageField(null=True, blank=True, upload_to=build_category_image_path)
     description = models.CharField(max_length=255)
 

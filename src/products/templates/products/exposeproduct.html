@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container mt-3 mx-auto col-12 col-md-8 col-lg-6 ">
+        <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            <label for="expose-product-title-id">Title:</label>
+            <div class="form-group">
+                {{ form.title }}
+            </div>
+            <div class="form-group">
+                <label for="expose-product-price-id">Price:</label>
+                {{ form.price }}
+            </div>
+            <div class="form-group">
+                <label for="expose-product-description-id">Description:</label>
+                {{ form.description }}
+            </div>
+            <label for="expose-product-category-id">Category:</label>
+            <div class="form-group">
+                {{ form.category }}
+            </div>
+            <div class="custom-file">
+                <input type="file" name="images" multiple id="expose-product-images-id" class="custom-file-input"/>
+                <label class="custom-file-label" for="expose-product-images-id">Images:</label>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+{% endblock %}

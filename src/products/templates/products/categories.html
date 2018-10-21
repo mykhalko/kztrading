@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="row">
+            {% for category in object_list %}
+                <div class="col-12 col-md-6 col-lg-4 mt-3 mb-3">
+                    <div class="card  mx-auto" style="width: 320px; height: 400px;">
+                        <img class="card-img-top mx-auto fix-img-size"
+                             {% if category.image %}
+                             src="{{ category.image.url}}"
+                             {% endif %}
+                             alt="{{ category.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ category.title }}</h5>
+                            <p class="card-text">{{ category.description }}</p>
+                        </div>
+                        <button onclick="location.href='{% url 'products:category' category_slug=category.slug %}'"
+                                align="center" class="btn card-footer">
+                            Go to  {{ category.title }}
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
