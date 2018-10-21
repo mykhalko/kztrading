@@ -1,15 +1,20 @@
 from functools import reduce
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.generic import ListView
 
 from products.models import Product
 
 
-class CartItemsView(ListView):
+class CartItemsView(LoginRequiredMixin, ListView):
     template_name = 'cart/cart.html'
+
+    def handle_no_permission(self):
+        return redirect(reverse_lazy('accounts:login') + '?next={}'.format(self.request.path))
 
     def get_queryset(self):
         items = self.request.session.get('cart_items')

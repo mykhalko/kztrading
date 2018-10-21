@@ -12,12 +12,12 @@ from products.models import Product
 @csrf_exempt
 def add_to_cart(request):
     id = request.POST.get('id', None)
-    print('#id is', id, 'type is', type(id))
     if id is None:
         return JsonResponse({
             'success': False,
             'errors': 'no item id provided'
         })
+    id = int(id)
     item = Product.objects.filter(id=id)
     if not item.exists():
         return JsonResponse(
