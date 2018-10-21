@@ -17,10 +17,21 @@ from django.contrib import admin
 from django.conf.urls import url
 from django.urls import path, include
 
+from django.conf.urls.static import static
+
+from . import settings
+
 
 urlpatterns = [
     url('^accounts/', include('accounts.urls', namespace='accounts')),
     url('^products/', include('products.urls', namespace='products')),
     url('^cart/', include('cart.urls', namespace='cart')),
+    url('^orders/', include('orders.urls', namespace='orders')),
+    url('^', include('home.urls', namespace='home')),
     path('admin/', admin.site.urls),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

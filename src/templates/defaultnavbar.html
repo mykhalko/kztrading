@@ -1,7 +1,10 @@
 {% url 'accounts:login' as login_url %}
 {% url 'accounts:register' as register_url %}
 {% url 'accounts:logout' as logout_url %}
-{% url 'products:items' as products_url %}
+{% url 'products:category' category_slug='all' as products_url %}
+{% url 'products:categories' as categories_url %}
+{% url 'products:expose' as expose_product_url %}
+{% url 'cart:cart_items' as cart_items_url %}
 {% url 'home:home' as home_url %}
 
 
@@ -30,6 +33,10 @@
                     <a class="dropdown-item" href="{{ logout_url }}">Log out</a>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link{% if request.get_full_path == expose_product_url %} active {% endif %}"
+                   href="{{ expose_product_url }}">Expose</a>
+            </li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link{% if request.get_full_path == register_url %} active {% endif %}"
@@ -47,23 +54,29 @@
                    href="{{ products_url }}">Products
                 </a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle"
-                   href="#" id="navbarDropdown" role="button"
-                   data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+{#            <li class="nav-item dropdown">#}
+{#                <a class="nav-link dropdown-toggle"#}
+{#                   href="#" id="navbarDropdown" role="button"#}
+{#                   data-toggle="dropdown"#}
+{#                   aria-haspopup="true" aria-expanded="false">#}
+{#                    Categories#}
+{#                </a>#}
+{#                <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+{#                    <a class="dropdown-item" href="#">Example</a>#}
+{#                    <div class="dropdown-divider"></div>#}
+{#                    <a class="dropdown-item" href="">Example</a>#}
+{#                </div>#}
+{#            </li>#}
+            <li class="nav-item">
+                <a class="nav-link{% if request.get_full_path == categories_url%} active {% endif %}"
+                   href="{{ categories_url }}">
                     Categories
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Example</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="">Example</a>
-                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link{% if request.session.purchases_amount %} active {% endif %}" href="#">
+                <a class="nav-link{% if request.session.purchases_amount %} active {% endif %}" href="{{ cart_items_url }}">
                     <i class="fas fa-shopping-cart"></i>
-                    <sup>
+                    <sup id="purchases-amount">
                         {% if request.session.purchases_amount %}
                             {{ request.session.purchases_amount }}
                         {% else %}
