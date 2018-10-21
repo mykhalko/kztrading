@@ -2,13 +2,14 @@ from functools import reduce
 
 from django.db.models import Q
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.views.generic import ListView
 
 from products.models import Product
 
 
 class CartItemsView(ListView):
-    template_name = 'cart/defaultcart.html'
+    template_name = 'cart/cart.html'
 
     def get_queryset(self):
         items = self.request.session.get('cart_items')
@@ -16,3 +17,5 @@ class CartItemsView(ListView):
             return None
         queryset = Product.objects.filter_id(items)
         return queryset
+
+
