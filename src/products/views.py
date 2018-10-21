@@ -77,7 +77,7 @@ class CategoryFilterProductView(ListView):
         if category_slug == 'all':
             queryset = self.model.objects.all()
         else:
-            queryset = self.queryset.filter(category__slug=category_slug)
+            queryset = self.model.objects.filter(category__slug=category_slug)
         search = self.kwargs.get('search')
         if search:
             search_args = search.split()
